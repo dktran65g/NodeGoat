@@ -4,7 +4,7 @@ on: [push, pull_request]
 jobs:
   e2e-test:
     name: Node.js
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: false
@@ -12,6 +12,11 @@ jobs:
         node-version: ["10.x", "12.x", "14.x"]
 
     steps:
+      - name: Install Cypress dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgconf-2-4
+          
       - name: Checkout https://github.com/${{ github.repository }}@${{ github.ref }}
         uses: actions/checkout@v2
         with:
